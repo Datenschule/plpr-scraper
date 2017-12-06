@@ -117,6 +117,10 @@ class SpeechParser(object):
         for line in self.lines:
             rline = line.strip()
 
+            # the following line is specifically needed for protocol 18191 where
+            # for some reason all lines end with the \u200e (LTR) mark
+            rline = rline.strip("\u200e")
+
             if not self.in_session and BEGIN_MARK.match(line):
                 self.in_session = True
                 continue
